@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1,minimal-ui,user-scalable=no" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="grey" />
+		<meta name="format-detection" content="telephone=no, email=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="msapplication-tap-highlight" content="no" />
+		<title>邀请好友注册领红包大礼</title>
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<link rel="stylesheet" href="http://static.qiangcaibao.com/css/mgm.css" />
+	</head>
+
+	<body>
+		<div id="app" class="clearfix">
+			<img src="http://static.qiangcaibao.com/images/ad_01.png" width="100%" height="100%" />
+			<img src="http://static.qiangcaibao.com/images/ad_02.png" width="100%" height="100%" />
+			<img src="http://static.qiangcaibao.com/images/ad_03.png" width="100%" height="100%" />
+			<img src="http://static.qiangcaibao.com/images/ad_04.png" width="100%" height="100%" />
+			<img src="http://static.qiangcaibao.com/images/ad_05.png" width="100%" height="100%" />
+			<div class="rule-con">
+				<a class="rule-link clearfix">详情规则<i class="icon-rule"></i></a>
+			</div>
+			<div class="rule clearfix">
+				活动期间，邀请好友加入趣现，只要“被邀请人”完成首次收款并满足条件，“邀请人”即可享有低费率收款取现特权！还有红包等着你哦~ 
+				<br>【邀请人奖励】 
+				<br>1、累计邀请5人注册成功可得10元红包返现； 
+				<br>2、累计邀请好友取现金额达到10000元可得20元红包返现； 
+				<br>【被邀请人奖励】 
+				<br>1、被邀请人加入趣现认证绑卡可以获得1元红包返现；
+				<br>2、被邀请人加入趣现首次收款1000元以上可以获得2元红包返现； 
+				<br>【规则】
+				<br>1、活动奖励针对自即日起注册的用户生效，“邀请人”奖励没有注册时间的限制； 
+				<br>2“邀请人”和“被邀请人”奖励会在用户完成收款，认证等相关操作后在对应的用户群中直接发给用户； 
+				<br>3、如果有疑问请关注微信公众号“趣现”获得帮助；
+				<br>4、本活动最终解释权归趣现所有；
+			</div>
+			<a class="share-btn" id="shareBtn" href="JavaScript:;">
+				<img src="http://static.qiangcaibao.com/images/share-btn.png" alt="" />
+			</a>
+			<input type="hidden" id="version" value="" />
+			<input type="hidden" id="token" value="" />
+			<div class="msg">
+				<p>分享成功</p>
+			</div>
+		</div>
+
+		<script src="http://static.qiangcaibao.com/js/library/require-zepto.js"></script>
+		<script type="text/javascript">
+			// Listen for the event.
+			window.onload = () => {
+				document.addEventListener('jsbridgeready', (e) => { //接收通知
+					window.QXJSBridge.getInfo('shareBtn', 'token');
+					window.QXJSBridge.getInfo('shareBtn', 'version');
+				}, false)
+				$('#shareBtn').on('click', function() {
+					var token = $("#token").val();
+					var version = $("#version").val();
+					window.QXJSBridge.requestShare('shareBtn', "我在趣现上用信用卡收款，送你低息券，拿去花！", "趣现APP,信用卡就能变钱包，随用随取，有卡就有钱。", "http://static.qiangcaibao.com/images/share.png", "http://static.qiangcaibao.com/html/regsiter.html?token=" + token + "&version=" + version);
+				})
+			}
+
+			function msgToJS(func, uin, value) {
+				var results = JSON.parse(value);
+				if(results.key == 'token' && results.status == 1) {
+					$('#token').val(results.value);
+				} else if(results.key == 'version' && results.status == 1) {
+					$('#version').val(results.value);
+				} else if(func == 'requestShare') {
+					$('.msg').show().css('opacity', '.7');
+					setTimeout(function() {
+						$('.msg').hide();
+					}, 2000); //2秒后执行该方法
+					$('.msg p').text(results.msg);
+				}
+			}
+		</script>
+	</body>
+
+</html>
